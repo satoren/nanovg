@@ -27,28 +27,33 @@ if(CMAKE_SYSTEM_NAME MATCHES "Linux")
 endif()
 
 
+if(LINUX)
+set(GLES_COMMON_LIBRARIES GLESv2 EGL m)
+elseif(WIN32)
+set(GLES_COMMON_LIBRARIES libGLESv2 libEGL)
+else()
+set(GLES_COMMON_LIBRARIES GLESv2 EGL)
+endif()
+
 add_executable(gles2_pbuffer gles2_pbuffer.c ../example/demo.c)
 add_dependencies(gles2_pbuffer swiftshader)
 target_compile_definitions(gles2_pbuffer PRIVATE RENDERER_NAME="gles2")
-if(LINUX)
-target_link_libraries(gles2_pbuffer nanovg GLESv2 EGL m)
-elseif(WIN32)
-target_link_libraries(gles2_pbuffer nanovg libGLESv2 libEGL)
-else()
-target_link_libraries(gles2_pbuffer nanovg GLESv2 EGL)
-endif()
 
+target_link_libraries(gles2_pbuffer nanovg ${GLES_COMMON_LIBRARIES})
+
+if(FREETYPE_FOUND)
+add_executable(gles2_ft_pbuffer gles2_pbuffer.c ../example/demo.c)
+add_dependencies(gles2_ft_pbuffer swiftshader)
+target_compile_definitions(gles2_ft_pbuffer PRIVATE RENDERER_NAME="gles2_freetype")
+target_link_libraries(gles2_ft_pbuffer nanovg_ft ${GLES_COMMON_LIBRARIES})
+#add_test(NAME gles2_ft_pbuffer COMMAND $<TARGET_FILE:gles2_ft_pbuffer> WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
+endif(FREETYPE_FOUND)
 
 add_executable(gles3_pbuffer gles3_pbuffer.c ../example/demo.c)
 add_dependencies(gles3_pbuffer swiftshader)
 target_compile_definitions(gles3_pbuffer PRIVATE RENDERER_NAME="gles3")
-if(LINUX)
-target_link_libraries(gles3_pbuffer nanovg GLESv2 EGL m)
-elseif(WIN32)
-target_link_libraries(gles3_pbuffer nanovg libGLESv2 libEGL)
-else()
-target_link_libraries(gles3_pbuffer nanovg GLESv2 EGL)
-endif()
+
+target_link_libraries(gles3_pbuffer nanovg ${GLES_COMMON_LIBRARIES})
 
 
 if(WIN32)
