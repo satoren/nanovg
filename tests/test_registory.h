@@ -13,6 +13,7 @@ typedef struct
 #include "testcase/fillRect.h"
 #include "testcase/compositePaths.h"
 #include "testcase/compositeOperation.h"
+#include "testcase/text.h"
 
 draw_test_info DRAW_TEST_CASES[] = {
     {"demo01", test_demo01},
@@ -40,4 +41,5 @@ draw_test_info DRAW_TEST_CASES[] = {
     {"compositeOperationLighter", test_compositeOperationLighter},
     {"compositeOperationCopy", test_compositeOperationCopy},
     {"compositeOperationXOR", test_compositeOperationXOR},
+    {"BigSizeText", test_BigSizeText},
 };
