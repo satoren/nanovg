@@ -8,7 +8,7 @@
 #ifdef _MSC_VER
 #define snprintf _snprintf
 #elif !defined(__MINGW32__)
-#include <iconv.h>
+//#include <iconv.h>
 #endif
 
 #define ICON_SEARCH 0x1F50D
